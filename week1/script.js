@@ -1,7 +1,7 @@
 const firstName = "Phil";
 const lastName = "Curran";
 const fullName = firstName + " " + lastName;
-const title = `${firstName}'s Week 1 Homework | IT121`;
+const title = `${firstName}'s Week 2 Homework | IT121`;
 const greeting = `Sup.  I'm ${fullName}.`;
 const yearsHere = 0.5;
 const ageStatement = `I've been at Seattle Central College for ${yearsHere} years.`;

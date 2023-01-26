@@ -5,7 +5,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Phil's Week 1 Homework | IT121</title>
-    <link rel="stylesheet" href="./style.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-image: url('https://www.toptal.com/designers/subtlepatterns/uploads/double-bubble-outline.png');
+        background-repeat: repeat;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Roboto Slab", serif;
+        line-height: 1.1em;
+      }
+      p,
+      ul,
+      li {
+        font-family: "Open Sans", sans-serif;
+        margin: 1em 8em;
+      }
+      .container {
+        display: grid;
+        height: 100vh;
+        grid-template-columns: 1fr 4fr 1fr;
+        grid-template-rows: 2fr 1fr 2fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas:
+          ". . ."
+          ". content ."
+          ". . .";
+      }
+      .content {
+        grid-area: content;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -15,6 +55,25 @@
           <p id="howLong"></p>
           <p id="futurePlans"></p>
       </div>
-    <script src="./script.js"></script>
+    <script>
+      const firstName = "Phil";
+      const lastName = "Curran";
+      const fullName = firstName + " " + lastName;
+      const title = `${firstName}'s Week 2 Homework | IT121`;
+      const greeting = `Sup.  I'm ${fullName}.`;
+      const yearsHere = 0.5;
+      const ageStatement = `I've been at Seattle Central College for ${yearsHere} years.`;
+      const futurePlans =
+        "I'm hoping to get a full-stack React developer job within the next few months.";
+
+      const titleField = document.getElementById("assignmentTitle");
+      titleField.innerHTML = title;
+      const greetingField = document.getElementById("greeting");
+      greetingField.innerHTML = greeting;
+      const ageStatementField = document.getElementById("howLong");
+      ageStatementField.innerHTML = ageStatement;
+      const futurePlansField = document.getElementById("futurePlans");
+      futurePlansField.innerHTML = futurePlans;
+    </script>
   </body>
 </html>

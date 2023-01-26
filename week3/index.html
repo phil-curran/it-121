@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HW3 - Making The Grade</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+      body { 
+        max-width: 960px; 
+        margin: 0 auto !important; 
+        float: none !important; 
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 960px;
+      }
+
+      .centered {
+        text-align: center;
+      }
+
+      .table {
+        width: 100%;
+        /* border: 1px solid black; */
+        border-collapse: collapse;
+      }
+
+      th {
+        text-align: left;
+        width: 50%;
+      }
+
+      tr, th, td {
+        padding: 10px 20px;
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body class=""container">
+    <h1 class="centered">GRADES</h1>
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Grade</th>
+      </tr>
+      <tbody id="grades"></tbody>
+    </table>
+
+    <p id="studentNumber"></p>
+    <p id="average"></p>
+    <p id="highest"></p>
+    <p id="lowest"></p>
+
+    <script>
+      let rows = document.getElementById("grades");
+
+      const grades =
+        "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+      let splitGrades = grades.split(",");
+
+      splitGrades.map((grade) => {
+        let splitGrade = grade.split("|");
+        let name = splitGrade[0];
+        let mark = splitGrade[1];
+        let newRow = rows.insertRow(-1);
+        let nameCell = newRow.insertCell(0);
+        let gradeCell = newRow.insertCell(1);
+        nameCell.innerHTML = name;
+        gradeCell.innerHTML = mark;
+      });
+
+      let studentNumber = document.getElementById("studentNumber");
+      let average = document.getElementById("average");
+      let highest = document.getElementById("highest");
+      let lowest = document.getElementById("lowest");
+
+      function getAverage() {
+        let total = 0;
+        splitGrades.map((grade) => {
+          let splitGrade = grade.split("|");
+          let mark = splitGrade[1];
+          total += parseInt(mark);
+        });
+        return total / splitGrades.length;
+      }
+
+      function getHighest() {
+        let highest = 0;
+        splitGrades.map((grade) => {
+          let splitGrade = grade.split("|");
+          let mark = splitGrade[1];
+          if (mark > highest) {
+            highest = mark;
+          }
+        });
+        return highest;
+      }
+
+      function getLowest() {
+        let lowest = 100;
+        splitGrades.map((grade) => {
+          let splitGrade = grade.split("|");
+          let mark = splitGrade[1];
+          if (mark < lowest) {
+            lowest = mark;
+          }
+        });
+        return lowest;
+      }
+
+      studentNumber.innerHTML = `<strong>Number of students: </strong> ${splitGrades.length}`;
+      average.innerHTML = `<strong>Average grade: </strong>${getAverage()}`;
+      highest.innerHTML = `<strong>Highest grade: </strong>${getHighest()}`;
+      lowest.innerHTML = `<strong>Lowest grade: </strong>${getLowest()}`;
+
+    </script>
+  </body>
+</html>

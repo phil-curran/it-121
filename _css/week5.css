@@ -1,0 +1,19 @@
+.container {
+  margin-top: 50px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.playerColumn {
+  border: 1px solid #a9a9a9;
+  border-radius: 4px;
+  padding: 20px;
+}
+
+#handOne,
+#handTwo > li {
+  margin-left: 1.5em;
+  font-size: 1.4em;
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoboDealer</title>
+    <link rel="stylesheet" href="../_css/normalize.css" />
+    <link rel="stylesheet" href="../_css/skeleton.css" />
+    <link rel="stylesheet" href="../_css/week5.css" />
+  </head>
+  <body class="container">
+    <h1 class="text-center">PokerFace</h1>
+    <div class="row">
+      <div class="six columns playerColumn">
+        <h2 class="text-center">Player One</h2>
+        <h3 class="text-center">Hand:</h3>
+        <ul id="handOne"></ul>
+        <button
+          class="button-primary u-full-width"
+          onclick="handleDrawHand('handOne')"
+        >
+          Player One Draw
+        </button>
+      </div>
+      <div class="six columns playerColumn">
+        <h2 class="text-center">Player Two</h2>
+        <h3 class="text-center">Hand:</h3>
+        <ul id="handTwo"></ul>
+        <button
+          class="button-primary u-full-width"
+          onclick="handleDrawHand('handTwo')"
+        >
+          Player Two Draw
+        </button>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    window.onload = (event) => {
+      const suits = ["Clubs", "Diamonds", "Hearts", "Spades"];
+      const cards = [
+        "Ace",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight",
+        "Nine",
+        "Ten",
+        "Jack",
+        "Queen",
+        "King",
+      ];
+
+      let roundCards = [];
+
+      handleDrawHand = (param) => {
+        let handResult = document.getElementById(param);
+        const hand = [];
+        for (let i = 0; i < 5; i++) {
+          const suit = suits[Math.floor(Math.random() * suits.length)];
+          const card = cards[Math.floor(Math.random() * cards.length)];
+          let pull = `${card} of ${suit}`;
+          if (hand.includes(pull) || roundCards.includes(pull)) {
+            i--;
+          } else {
+            hand.push(pull);
+            roundCards.push(pull);
+          }
+          hand.push();
+        }
+        hand.forEach((card) => {
+          let li = document.createElement("li");
+          li.innerText = card;
+          handResult.appendChild(li);
+        });
+        console.log(roundCards);
+      };
+    };
+  </script>
+</html>

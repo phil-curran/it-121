@@ -1,0 +1,39 @@
+.over {
+  background-color: orange;
+}
+.selected {
+  background-color: green;
+}
+
+button {
+  margin: 10px;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.gryffindor {
+  background-color: red;
+  color: gold;
+}
+
+.slytherin {
+  background-color: green;
+  color: silver;
+}
+
+.ravenclaw {
+  background-color: blue;
+  color: #cd7f32;
+}
+
+.hufflepuff {
+  background-color: yellow;
+  color: black;
+}
+
+.gray-row {
+  background-color: #bdc3c7;
+  border: 0;
+}

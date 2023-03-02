@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- css -->
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./skeleton.css" />
+    <!-- js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <div id="buttons"></div>
+      <table class="u-full-width table">
+        <thead>
+          <tr>
+            <th>Name:</th>
+            <th>Role:</th>
+            <th>House:</th>
+            <th>Gender:</th>
+            <th>Alignment:</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </main>
+
+    <script>
+      // list of characters
+      var characters = [
+        {
+          name: "Albus Dumbledore",
+          role: "Staff",
+          house: "Gryffindor",
+          gender: "Man",
+          alignment: "Good",
+        },
+        {
+          name: "Nymphadora Tonks",
+          role: "",
+          house: "Hufflepuff",
+          gender: "Woman",
+          alignment: "Good",
+        },
+        {
+          name: "Ron Weasley",
+          role: "Student",
+          house: "Gryffindor",
+          gender: "Man",
+          alignment: "Good",
+        },
+        {
+          name: "Ginny Weasley",
+          role: "Student",
+          house: "Gryffindor",
+          gender: "Woman",
+          alignment: "Good",
+        },
+        {
+          name: "Hermione Granger",
+          role: "Student",
+          house: "Gryffindor",
+          gender: "Woman",
+          alignment: "Good",
+        },
+        {
+          name: "Mad-eye Moody",
+          role: "Staff",
+          house: "",
+          gender: "Man",
+          alignment: "Good",
+        },
+        {
+          name: "Prof McGonagall",
+          role: "Staff",
+          house: "Gryffindor",
+          gender: "Woman",
+          alignment: "Good",
+        },
+        {
+          name: "Harry Potter",
+          role: "Student",
+          house: "Gryffindor",
+          gender: "Man",
+          alignment: "Good",
+        },
+        {
+          name: "Draco Malfoy",
+          role: "Student",
+          house: "Slytherin",
+          gender: "Man",
+          alignment: "Evil",
+        },
+        {
+          name: "Hagrid",
+          role: "Staff",
+          house: "Gryffindor",
+          gender: "Man",
+          alignment: "Good",
+        },
+        {
+          name: "Luna Lovegood",
+          role: "Student",
+          house: "Ravenclaw",
+          gender: "Woman",
+          alignment: "Good",
+        },
+        {
+          name: "Voldemort",
+          role: "",
+          house: "Slytherin",
+          gender: "Man",
+          alignment: "Evil",
+        },
+        {
+          name: "Bellatrix Lestrange",
+          role: "",
+          house: "Slytherin",
+          gender: "Woman",
+          alignment: "Evil",
+        },
+        {
+          name: "Severus Snape",
+          role: "Staff",
+          house: "Slytherin",
+          gender: "Man",
+          alignment: "?",
+        },
+      ];
+
+      $(document).ready(function () {
+        // defs
+        let tbody = document.getElementById("tbody");
+        let buttons = document.getElementById("buttons");
+
+        // add a button for each 'house' value
+        let temp = characters
+          .map((character) => character.house)
+          .filter((house) => house !== "");
+        let houses = new Set(temp);
+
+        houses.forEach((house) => {
+          let button = document.createElement("button");
+          button.innerHTML = house;
+          if (house === "Gryffindor") {
+            button.classList.add("gryffindor");
+          } else if (house === "Slytherin") {
+            button.classList.add("slytherin");
+          } else if (house === "Ravenclaw") {
+            button.classList.add("ravenclaw");
+          } else if (house === "Hufflepuff") {
+            button.classList.add("hufflepuff");
+          }
+          // add click handler to show only rows matching selected 'house'.
+          // Enable buttons to call this handler.
+          button.addEventListener("click", () => {
+            let rows = document.querySelectorAll(".entry");
+            rows.forEach((row, index) => {
+              console.log("Index: ", index);
+              row.classList.remove("gray-row");
+              if (row.children[2].innerHTML === house) {
+                row.style.display = "table-row";
+                if (index % 2 === 0) {
+                  row.classList.add("gray-row");
+                }
+              } else {
+                row.style.display = "none";
+              }
+            });
+          });
+          buttons.appendChild(button);
+        });
+
+        // add table row for each character
+        characters.forEach((character, index) => {
+          let row = document.createElement("tr");
+          if (index % 2 === 0) {
+            row.classList.add("gray-row");
+          }
+          row.classList.add("entry");
+          row.innerHTML = `<td>${character.name}</td>
+          <td>${character.role}</td>
+          <td>${character.house}</td>
+          <td>${character.gender}</td>
+          <td>${character.alignment}</td>`;
+          tbody.appendChild(row);
+        });
+
+        // set visible rows to alternating background color
+        // each button click controls this, inconsistently...
+
+        // add click handler to reset table
+        let resetButton = document.createElement("button");
+        resetButton.innerHTML = "Reset";
+        resetButton.addEventListener("click", () => {
+          let rows = document.querySelectorAll(".entry");
+          rows.forEach((row) => {
+            row.style.display = "table-row";
+            row.classList.remove("gray-row");
+          });
+        });
+        buttons.appendChild(resetButton);
+      });
+    </script>
+  </body>
+</html>

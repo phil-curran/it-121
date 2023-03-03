@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../_css/skeleton.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Weather Forecast | Phil Curran</title>
+  </head>
+  <body>
+    <main class="container">
+      <h1 class="text-center">Weather Forecast</h1>
+      <form>
+        <div class="row">
+          <div class="nine columns">
+            <label for="locationField">Your Location</label>
+            <input
+              class="u-full-width"
+              type="text"
+              placeholder="Seattle, WA"
+              id="locationInput"
+            />
+          </div>
+          <div class="two columns">
+            <input
+              class="button-primary formSubmitBtn u-full-width"
+              type="submit"
+              value="Submit"
+            />
+          </div>
+        </div>
+      </form>
+      <div class="locationHeader"></div>
+      <div class="row weatherData"></div>
+    </main>
+
+    <script>
+      // get objects
+      const form = document.querySelector("form");
+      const weatherData = document.querySelector(".weatherData");
+      const locationHeader = document.querySelector(".locationHeader");
+
+      // form event listener
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        weatherData.innerHTML = "";
+        locationHeader.innerHTML = "";
+        let locationString = document
+          .querySelector("#locationInput")
+          .value.split(", ");
+        let locationInfo = document.createElement("p");
+        locationInfo.classList.add("text-center");
+        locationInfo.innerHTML = `<h3>5-Day Forecast for ${locationString[0]}, ${locationString[1]}</h3>`;
+        locationHeader.append(locationInfo);
+        getData(locationString);
+      });
+
+      // temp converter
+      const kelvinToF = (value) => {
+        let fahrenheit = ((Number(value) - 273.15) * 9) / 5 + 32;
+        return fahrenheit.toFixed(0);
+      };
+
+      // build weather cards
+      function buildCards(data) {
+        let days = data.list.filter(
+          (day) => day.dt_txt.split(" ")[1] === "12:00:00"
+        );
+        days.forEach((day) => {
+          let card = document.createElement("div");
+          card.classList.add("six", "columns", "card");
+          let date = new Date(day.dt);
+          card.innerHTML = `
+          <div class='row'>
+            <div class='seven columns'>
+              <h4>${day.dt_txt.split(" ")[0]}</h3>
+              <ul>
+                <li>Description: ${day.weather[0].description}</li>
+                <li>High Temp: ${kelvinToF(day.main.temp_max)}°F</li>
+                <li>Low Temp: ${kelvinToF(day.main.temp_min)}°F</li>
+                <li>Humidity: ${day.main.humidity}%</li>
+                <li>Wind: ${day.wind.speed}m/s | ${day.wind.deg}°</li>
+              </ul>
+            </div>
+            <div class='four columns'>
+              <img src='http://openweathermap.org/img/w/${
+                day.weather[0].icon
+              }.png' alt='weather icon' />
+            </div>
+          </div>
+          `;
+          weatherData.appendChild(card);
+        });
+      }
+
+      const locationError = () => {
+        locationHeader.innerHTML = "";
+        let locationError = document.createElement("div");
+        locationError.classList.add("text-center");
+        locationError.innerHTML = `<h3>Location not found. Please try again.</h3>`;
+        locationHeader.append(locationError);
+      };
+
+      // api request
+      function getData(locationString) {
+        let promise = new Promise(function (resolve, reject) {
+          let request = new XMLHttpRequest();
+          const url = `http://api.openweathermap.org/data/2.5/forecast?q=${locationString[0]},${locationString[1]},USA&appid=4789d132a6a9df8ff4451de8598a8cb2`;
+          request.onload = function () {
+            if (this.status === 200) {
+              resolve(request.response);
+            } else if (this.status === 404) {
+              reject(Error(request.statusText));
+              weatherData.innerHTML = "${request.statusText}";
+            } else {
+              reject(request.response);
+            }
+          };
+          request.open("GET", url, true);
+          request.send();
+        }).then(
+          function (response) {
+            const body = JSON.parse(response);
+            let country = body.city.country;
+            if (country !== "US") {
+              locationError();
+              return;
+            } else {
+              buildCards(body);
+            }
+          },
+          function (error) {
+            console.error(error);
+          }
+        );
+      }
+    </script>
+  </body>
+</html>

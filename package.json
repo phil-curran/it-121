@@ -1,0 +1,19 @@
+{
+  "name": "it121",
+  "version": "1.0.0",
+  "description": "Repo for IT121 Homework",
+  "main": "home.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phil-curran/it-121.git"
+  },
+  "author": "Phil Curran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phil-curran/it-121/issues"
+  },
+  "homepage": "https://github.com/phil-curran/it-121#readme"
+}

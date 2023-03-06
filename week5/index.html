@@ -7,12 +7,12 @@
     <title>RoboDealer</title>
     <link rel="stylesheet" href="../_css/normalize.css" />
     <link rel="stylesheet" href="../_css/skeleton.css" />
-    <link rel="stylesheet" href="../_css/week5.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body class="container">
     <h1 class="text-center">PokerFace</h1>
     <div class="row">
-      <div class="six columns playerColumn">
+      <div class="column playerColumn">
         <h2 class="text-center">Player One</h2>
         <h3>Hand:</h3>
         <ul id="handOne"></ul>
@@ -23,7 +23,7 @@
           Player One Draw
         </button>
       </div>
-      <div class="six columns playerColumn">
+      <div class="column playerColumn">
         <h2 class="text-center">Player Two</h2>
         <h3 class="text-center">Hand:</h3>
         <ul id="handTwo"></ul>
@@ -58,13 +58,19 @@
 
       let roundCards = [];
 
+      function Card(value, suit) {
+        this.value = value;
+        this.suit = suit;
+      }
+
       handleDrawHand = (param) => {
         let handResult = document.getElementById(param);
         const hand = [];
         for (let i = 0; i < 5; i++) {
           const suit = suits[Math.floor(Math.random() * suits.length)];
-          const card = cards[Math.floor(Math.random() * cards.length)];
-          let pull = `${card} of ${suit}`;
+          const value = cards[Math.floor(Math.random() * cards.length)];
+          let tempCard = new Card(value, suit);
+          let pull = `${tempCard.value} of ${tempCard.suit}`;
           if (hand.includes(pull) || roundCards.includes(pull)) {
             i--;
           } else {
@@ -78,7 +84,6 @@
           li.innerText = card;
           handResult.appendChild(li);
         });
-        console.log(roundCards);
       };
     };
   </script>
